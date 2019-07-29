@@ -4,7 +4,7 @@ AWS_REGION	:= us-west-2
 STACK_NAME	:= mozdef-aws-nested
 BRANCH := master
 AMI_MAP_TEMP_FILE	:= /tmp/mozdef-ami-map.txt
-DEV_STACK_PARAMS_FILENAME	:= aws_parameters.dev.json
+DEV_STACK_PARAMS_FILENAME	:= ~/.mozdef/aws_parameters.dev.json
 # For more information on the rationale behind the code in STACK_PARAMS see https://github.com/aws/aws-cli/issues/2429#issuecomment-441133480
 DEV_STACK_PARAMS	:= $(shell test -e $(DEV_STACK_PARAMS_FILENAME) && python -c 'import json,sys;f=open(sys.argv[1]);print(" ".join([",".join(["%s=\\\"%s\\\""%(k,v) for k,v in x.items()]) for x in json.load(f)]));f.close()' $(DEV_STACK_PARAMS_FILENAME))
 OIDC_CLIENT_ID		:= $(shell test -e $(DEV_STACK_PARAMS_FILENAME) && python -c 'import json,sys;f=open(sys.argv[1]);print(next((x["ParameterValue"] for x in json.load(f) if x["ParameterKey"]=="OIDCClientId"),""));f.close()' $(DEV_STACK_PARAMS_FILENAME))
